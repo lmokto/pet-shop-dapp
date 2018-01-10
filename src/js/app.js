@@ -25,12 +25,12 @@ App = {
 
   initWeb3: function() {
     // Is there an injected web3 instance?
-    // > Mist, Ethereum browsers, or Chrome with MetaMask extension will inejct their own web3 provider
     if (typeof web3 !== 'undefined') {
-      App.web3Provider = web.currentProvider;
+      App.web3Provider = web3.currentProvider;
     } else {
       // If no injected web3 instance is detected, fall back to Ganache
-      // > .. finr for development enviroments.
+      // > Mist, Ethereum browsers, or Chrome with MetaMask extension will inejct their own web3 provider
+      // > .. fine for development enviroments.
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
     web3 = new Web3(App.web3Provider);
@@ -64,8 +64,7 @@ App = {
       adoptionInstance = instance;
 
       return adoptionInstance.getAdopters.call();
-
-    }).then(function(adopters){
+    }).then(function(adopters) {
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
 	  $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
@@ -93,7 +92,7 @@ App = {
         adoptionInstance = instance;
 	
 	// Execute adopt as a transaction by sending account
-	return adoptInstance.adopt(petId, {from: account});
+	return adoptionInstance.adopt(petId, {from: account});
       }).then(function(result) {
         return App.markAdopted();
       }).catch(function(err) {
